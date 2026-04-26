@@ -1,11 +1,50 @@
+USE MyFlightBase;
+GO
 
-INSERT INTO COUNTRY (CountryName) VALUES ('Ukraine');
+-- 1. Наполняем COUNTRY
+DECLARE @i INT = 1;
+WHILE @i <= 100
+BEGIN
+    INSERT INTO COUNTRY (CountryName, RequiresCustoms, IsInUNList)
+    VALUES (N'Країна ' + CAST(@i AS NVARCHAR(10)), @i % 2, 1);
+    SET @i = @i + 1;
+END;
+PRINT 'Countries added';
 
-INSERT INTO TICKET (FirstName, LastName, BasePrice)
-SELECT TOP 1001 
-    'Passenger', 
-    'No ' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR), 
-    100 + (ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) % 50)
-FROM sys.all_columns a CROSS JOIN sys.all_columns b;
+-- 2. Наполняем CITY
+SET @i = 1;
+WHILE @i <= 100
+BEGIN
+    INSERT INTO CITY (CountryID, CityName)
+    VALUES (@i, N'Місто ' + CAST(@i AS NVARCHAR(10)));
+    SET @i = @i + 1;
+END;
+PRINT 'Cities added';
 
-SELECT COUNT(*) AS [Total_Tickets] FROM TICKET;
+-- 3. Наполняем PLANE_TYPE
+SET @i = 1;
+WHILE @i <= 100
+BEGIN
+    INSERT INTO PLANE_TYPE (ModelName, Capacity)
+    VALUES (N'Літак-' + CAST(@i AS NVARCHAR(10)), 100 + @i);
+    SET @i = @i + 1;
+END;
+PRINT 'Planes added';
+
+-- 4. Наполняем FLIGHT
+SET @i = 1;
+WHILE @i <= 100
+BEGIN
+    INSERT INTO FLIGHT (FlightNumber, DepartureCityID, ArrivalCityID, PlaneTypeID, DepartureDateTime, DistanceKm)
+    VALUES (
+        'FL' + CAST(@i AS VARCHAR(5)), 
+        @i, 
+        CASE WHEN @i = 100 THEN 1 ELSE @i + 1 END, 
+        @i, 
+        DATEADD(DAY, @i, GETDATE()), 
+        500 + (@i * 5)
+    );
+    SET @i = @i + 1;
+END;
+PRINT 'Flights added';
+GO
