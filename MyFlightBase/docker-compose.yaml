@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: my_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flight_db
+    ports:
+      - "5432:5432"
+
+  api:
+    image: artemkalash/users-api:0.0.1
+    container_name: my_python_api
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/flight_db"

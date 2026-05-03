@@ -1,7 +1,6 @@
 USE MyFlightBase;
 GO
 
--- 1. Наполняем COUNTRY
 DECLARE @i INT = 1;
 WHILE @i <= 100
 BEGIN
@@ -11,7 +10,6 @@ BEGIN
 END;
 PRINT 'Countries added';
 
--- 2. Наполняем CITY
 SET @i = 1;
 WHILE @i <= 100
 BEGIN
@@ -21,7 +19,6 @@ BEGIN
 END;
 PRINT 'Cities added';
 
--- 3. Наполняем PLANE_TYPE
 SET @i = 1;
 WHILE @i <= 100
 BEGIN
@@ -31,7 +28,7 @@ BEGIN
 END;
 PRINT 'Planes added';
 
--- 4. Наполняем FLIGHT
+
 SET @i = 1;
 WHILE @i <= 100
 BEGIN
