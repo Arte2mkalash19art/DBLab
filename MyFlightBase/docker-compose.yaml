@@ -11,7 +11,7 @@ services:
       - "5432:5432"
 
   api:
-    image: artemkalash/users-api:0.0.1
+    build: .
     container_name: my_python_api
     depends_on:
       - db
