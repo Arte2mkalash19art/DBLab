@@ -2,22 +2,16 @@ USE MyFlightBase;
 GO
 
 UPDATE PLANE_TYPE 
-SET Capacity = 250 
-WHERE ModelName = N'Літак-5';
+SET Capacity = 300 
+WHERE ModelName = N'Літак-10';
 
 UPDATE FLIGHT 
-SET DistanceKm = DistanceKm * 1.1 
-WHERE DistanceKm > 1000;
+SET DistanceKm = DistanceKm * 1.05 
+WHERE DistanceKm > 1200;
 
 UPDATE COUNTRY 
-SET IsInUNList = 1 
-WHERE CountryName = N'Країна 10';
+SET RequiresCustoms = 1 
+WHERE CountryName = N'Країна 15';
 
-DELETE FROM FLIGHT 
-WHERE DistanceKm < 100;
-
-DELETE FROM PLANE_TYPE 
-WHERE PlaneTypeID NOT IN (SELECT PlaneTypeID FROM FLIGHT);
-
-PRINT 'Update and Delete operations completed successfully';
+PRINT 'Данні успішно оновлені!';
 GO
